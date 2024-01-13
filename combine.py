@@ -6,6 +6,7 @@ import preprocessing as pre
 import spacy
 from translator import detect_language, translate_to_english
 from ner import perform_ner
+import sklearn
 
 
 st.set_page_config(page_title='Disaster Tweet Analysis', page_icon=':bar_chart:', layout='wide')
