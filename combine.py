@@ -26,12 +26,6 @@ def vectorizer_and_load_model():
 
     return vectorizer, interpreter
 
-def extract_entities(text):
-    spacy_model = spacy.load('en_core_web_sm')
-    doc = spacy_model(text)
-    entities = [(ent.text, ent.label_) for ent in doc.ents]
-    return entities 
-
 def main():
     st.title("Deteksi Bencana dengan NLP - TensorFlow Lite")
     st.sidebar.title("Prediksi Bencana")
@@ -75,19 +69,11 @@ def main():
         prediction = interpreter.get_tensor(output_tensor_index)[0][0]
         
         prediction_label = "Disaster" if prediction >= 0.5 else "Non-Disaster"
+        
+        st.success(f"Hasil Prediksi: {prediction_label} (Probabilitas: {prediction:.2f})", icon='✅')
 
-        # Ekstraksi entitas dari user_input
-        entities = extract_entities(user_input)
         
-        
-        st.success(f"Hasil Prediksi: {prediction_label} (Probabilitas: {prediction:.2f})")
-        
-        # if entities:
-        #     st.write("Entitas yang terdeteksi:")
-        #     for ent, label in entities:
-        #         st.write(f"- {ent} ({label})")
-        
-        perform_ner(user_input)
+    perform_ner(user_input)
 
 if __name__ == "__main__":
     main()
