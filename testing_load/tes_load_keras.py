@@ -4,7 +4,7 @@ import tensorflow as tf
 import pickle
 import sklearn
 import numpy as np
-import preprocessing as pre
+import prep_app.preprocessing as pre
 
 
 # import plotly.express as px 
