@@ -12,7 +12,6 @@ from prep_app.translator import detect_language, translate_to_english
 from prep_app.ner import perform_ner_gpe
 
 
-
 # Define your preprocessing_text function
 def preprocessing_text(text, use_stemmer=True):
     if detect_language(text) != 'en':
@@ -34,7 +33,7 @@ def vectorizer_and_load_model():
 
 # Function to predict text
 def predict_text(text, vectorizer, interpreter):
-    clean_text = preprocessing_text(text) 
+    clean_text = preprocessing_text(text, use_stemmer=True) 
     # Transform input using CountVectorizer
     user_input_vec = vectorizer.transform([clean_text])
 
@@ -77,6 +76,7 @@ def visualize_ner_entities(df, prediction_column, labels=None):
     fig.update_layout(yaxis={'categoryorder':'total ascending'},
                       xaxis={'tickmode': 'linear', 'dtick': 1})
     st.plotly_chart(fig)
+    
 
 
 def visualize_piechart(labels=None, values= None, 
@@ -101,7 +101,37 @@ def visualize_piechart(labels=None, values= None,
         ),
         title=dict(text=f'{var} Distribution', x=0.5, y=0.95, xanchor='center', yanchor='top') 
     )
+
+    # Display the Pie chart
+    st.plotly_chart(fig)
     
+def horizontal_bar_chart(df, x='unigram_counts',y='unigram', top=5, target=None):
+    """
+    Create a horizontal bar chart from a DataFrame and sort by a specific column.
+
+    Parameters:
+    - df: DataFrame containing the data.
+    - column_name: Name of the column to sort and use for the bar chart.
+
+    Example:
+    - df = pd.DataFrame({'Category': ['A', 'B', 'C'],
+                        'Values': [30, 20, 40]})
+      horizontal_bar_chart(df, 'Values')
+    """
+    # Sort the DataFrame by the specified column in descending order
+    sorted_df = df.head(top).sort_values(by=x, ascending=True)
+
+    # Create a horizontal bar chart using Plotly Express
+    fig = px.bar(sorted_df, x=x, y=y, orientation='h',
+                 #change labels 
+                 labels={y: 'Categories', x: 'Counts'},
+                 color_discrete_sequence=['#bb2b77'],
+                 title=f'Top {top} Most Frequent {y.capitalize()} \nin {target} Tweets')
+
+    fig.update_layout(yaxis={'categoryorder':'total ascending'},
+                      xaxis={'tickmode': 'linear', 'dtick': 1})
+   
+    # Show the plot
     st.plotly_chart(fig)
 
 @st.cache_data
@@ -112,8 +142,9 @@ def load_data_with_predictions(uploaded_file=None, column_to_predict=None):
     # Perform predictions and add a new column
     vectorizer, interpreter = vectorizer_and_load_model()
     df['Prediction'] = df[column_to_predict].apply(lambda x: predict_text(x, vectorizer, interpreter))
+    
     list_translated_text = df[column_to_predict].apply(lambda x: preprocessing_text(x, use_stemmer=False))
-    df['ner_text'] = list_translated_text.apply(lambda x: perform_ner_gpe(x))
+    df['ner_text'] =  list_translated_text.apply(lambda x: perform_ner_gpe(x))
     return df
 
     
@@ -162,12 +193,31 @@ def main():
                 labels = df['Prediction'].value_counts().index
                 values= df['Prediction'].value_counts().values
                 visualize_piechart(labels, values,  var='Disaster Tweets')
+                
+                #unigram
+                text_target1= df.query("Prediction=='Disaster'")[column_to_predict]
+                text_target1= text_target1.apply(lambda x: preprocessing_text(x, use_stemmer=False))
+                df_disaster_unigrams= pre.ngrams_frequencies(text_target1, n_grams=1, name='unigram') #default n_grams=1, name='unigram'
+                horizontal_bar_chart(df_disaster_unigrams, 
+                                     x='unigram_counts', y='unigram',
+                                     top=10, target='Disaster')
+                
+
+                
             with row2[1]:
                 visualize_ner_entities(df, prediction_column='Prediction', labels='Disaster')
+                
+                 #bigram
+                text_target1= df.query("Prediction=='Disaster'")[column_to_predict]
+                text_target1= text_target1.apply(lambda x: preprocessing_text(x, use_stemmer=False))
+                df_disaster_bigrams= pre.ngrams_frequencies(text_target1, n_grams=2, name='bigram') 
+                horizontal_bar_chart(df_disaster_bigrams, 
+                                     x='bigram_counts', y='bigram',
+                                     top=10, target='Disaster')
+            
         
         else:
             st.warning("Please choose a file and enter a valid column name.")
-
 
     if __name__ == "__main__":
         main()

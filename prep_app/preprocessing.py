@@ -1,6 +1,7 @@
 from wordcloud import STOPWORDS
 from nltk.stem import PorterStemmer
 import re
+import pandas as pd
 
 def remove_stopword(text, words_to_remove=None):
     # Add words_to_remove to STOPWORDS
@@ -80,3 +81,43 @@ def clean_text_df(df, col_name, words_to_remove=None, use_stemmer=False):
     df_cleaned = df.copy()
     df_cleaned[col_name] = df_cleaned[col_name].apply(lambda x: clean_text(x, words_to_remove, use_stemmer))
     return df_cleaned
+
+
+
+def generate_ngrams(text, n_gram=1):
+    # Tokenize the text, remove empty strings and stopwords
+    token = [token for token in text.split(' ') if token != '' if token not in STOPWORDS]
+    
+    # Generate n-grams using a sliding window approach
+    ngrams = zip(*[token[i:] for i in range(n_gram)])
+    
+    # Combine the n-grams into a list of strings
+    return [' '.join(ngram) for ngram in ngrams]
+
+
+def ngrams_frequencies(text_data, n_grams=1, name='unigram'):
+    """
+    This function creates a DataFrame containing n-grams frequencies based on the provided text data.
+
+    Parameters:
+    - text_data: Iterable of text data
+    - n_grams: Size of n-grams (default is 1 for unigrams)
+    - name: Name to use for the n-grams column in the DataFrame (default is 'unigram')
+
+    Returns:
+    - DataFrame: DataFrame containing n-gram frequencies
+    """
+    # Initialize an empty dictionary to store word frequencies
+    ngrams_dict = {}
+
+    # Iterate over each text in the provided text data
+    for text in text_data:
+        # Generate n-grams for each word in the text
+        for ngram in generate_ngrams(text, n_grams):
+            # Update the frequency count for each n-gram in the word_dict dictionary
+            ngrams_dict[ngram] = ngrams_dict.get(ngram, 0) + 1
+
+    # Convert the n-gram dictionary to a DataFrame
+    df_ngrams = pd.DataFrame(list(ngrams_dict.items()), columns=[name, f'{name}_counts'])
+
+    return df_ngrams
