@@ -161,7 +161,7 @@ def main():
             with row2[0]:
                 labels = df['Prediction'].value_counts().index
                 values= df['Prediction'].value_counts().values
-                visualize_piechart(labels, values,  var='Prediction Tweets')
+                visualize_piechart(labels, values,  var='Disaster Tweets')
             with row2[1]:
                 visualize_ner_entities(df, prediction_column='Prediction', labels='Disaster')
         
