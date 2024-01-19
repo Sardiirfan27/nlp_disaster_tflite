@@ -1,7 +1,7 @@
 # home.py
 import streamlit as st
 import streamlit.components.v1 as components
-from PIL import Image   
+# from PIL import Image   
 
 def home_page():
     centered_title = """
@@ -13,10 +13,10 @@ def home_page():
     st.markdown(centered_title, unsafe_allow_html=True)
     
     #opening the image
-    image = Image.open('disaster.png')
-    st.image(image,caption="disaster", use_column_width=True)
-    source_link = "https://www.independent.co.uk/climate-change/news/worst-climate-disasters-2022-hurricane-wildfires-heatwave-b2255198.html"
-    st.write(f"Image source: [www.independent.co.uk]({source_link})")
+    # image = Image.open('disaster.png')
+    # st.image(image,caption="disaster", use_column_width=True)
+    # source_link = "https://www.independent.co.uk/climate-change/news/worst-climate-disasters-2022-hurricane-wildfires-heatwave-b2255198.html"
+    # st.write(f"Image source: [www.independent.co.uk]({source_link})")
 
     paragraph = """
     <p>The project's overarching objectives include developing a reliable classification model that significantly contributes to the efficiency of disaster response and management.
