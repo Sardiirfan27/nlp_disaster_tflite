@@ -16,5 +16,6 @@ tensorflow==2.13.0
 tensorflow-io-gcs-filesystem==0.34.0
 wordcloud==1.9.3
 hydralit-components==1.0.10
+plotly==5.18.0
 
 # yarg==0.1.9
