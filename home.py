@@ -13,7 +13,7 @@ def home_page():
     st.markdown(centered_title, unsafe_allow_html=True)
     
     #opening the image
-    image = Image.open('disaster.avif')
+    image = Image.open('image_720.png')
     st.image(image,caption="disaster")
     source_link = "https://www.independent.co.uk/climate-change/news/worst-climate-disasters-2022-hurricane-wildfires-heatwave-b2255198.html"
     st.write(f"Image source: [www.independent.co.uk]({source_link})")
