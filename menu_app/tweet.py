@@ -91,3 +91,5 @@ def main_tweet():
         st.success(f"Prediction Result: {prediction_label} (Probability: {prediction:.2f})", icon='✅')
    
     perform_ner(user_input)
+    vert_space = '<div style="padding: 180px 5px;"></div>'
+    st.markdown(vert_space, unsafe_allow_html=True)
