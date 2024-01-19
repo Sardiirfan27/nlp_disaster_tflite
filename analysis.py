@@ -99,8 +99,7 @@ def visualize_piechart(labels=None, values= None,
             bgcolor='rgba(211,211,211,0.3)',  # legend background
             font=dict(size=12)    
         ),
-        title=dict(text=f'{var} Distribution', x=0.3, y=0.95,
-                   xanchor='center') 
+        title=dict(text=f'{var} Distribution', x=0.3, y=0.95) 
     )
     
     st.plotly_chart(fig)
