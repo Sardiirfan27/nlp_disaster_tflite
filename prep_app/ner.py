@@ -45,7 +45,15 @@ def visualize_ner(doc, labels= tuple(),
 def perform_ner(text):
     doc = processing_text("en_core_web_sm", text)
     labels = [ent.label_ for ent in doc.ents]
-    visualize_ner(doc, labels=labels)
+    return visualize_ner(doc, labels=labels)
+    
+def perform_ner_gpe(text):
+    #perform NER (GPE)
+    labels = ["GPE"]
+    doc = processing_text("en_core_web_sm", text)
+    #entity labels
+    entities = [ent.text for ent in doc.ents if ent.label_ in labels]
+    return entities
 
 # Main Streamlit app
 if __name__ == "__main__":

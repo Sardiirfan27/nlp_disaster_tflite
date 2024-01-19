@@ -1,13 +1,8 @@
 import streamlit as st
-import tensorflow as tf
-import pickle
 import hydralit_components as hc
-import numpy as np
-import prep_app.preprocessing as pre
-from prep_app.translator import detect_language, translate_to_english
-from prep_app.ner import perform_ner
 import home
-import tweet
+import menu_app.tweet as tweet
+import analysis
 
 st.set_page_config(page_title='Disaster Tweet Analysis', page_icon=':bar_chart:', layout='wide')
 
@@ -16,8 +11,7 @@ st.set_page_config(page_title='Disaster Tweet Analysis', page_icon=':bar_chart:'
 menu_data = [
     {'icon': "fa fa-quote-right",'label':"Tweet"},
     {'icon': "far fa-chart-bar", 'label':"Analysis"},
-    {'icon': "fas fa-tachometer-alt", 'label':"Dashboard",'ttip':"I'm the Dashboard tooltip!"}, #can add a tooltip message
-    {'icon': "fa-solid fa-radar",'label':"Dropdown2", 'submenu':[{'label':"Sub-item 1", 'icon': "fa fa-meh"},{'label':"Sub-item 2"},{'icon':'🙉','label':"Sub-item 3",}]},
+
 ]
 
 over_theme = {'txc_inactive': '#FFFFFF','menu_background':'purple'}
@@ -38,4 +32,7 @@ if menu_id == 'Home':
     
 if menu_id == 'Tweet':
     tweet.main_tweet()
+    
+if menu_id == 'Analysis':
+    analysis.main()
    

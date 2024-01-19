@@ -9,7 +9,7 @@ from prep_app.ner import perform_ner
 
 def preprocessing_text(text):
     # Perform text cleaning
-    cleaned_input_text = pre.clean_text(text[0], use_stemmer=True)
+    cleaned_input_text = pre.clean_text(text, use_stemmer=True)
     return cleaned_input_text
 
 def vectorizer_and_load_model():
@@ -24,7 +24,7 @@ def vectorizer_and_load_model():
 
 
 def main_tweet():
-    st.title("Disaster Detection with NLP - TensorFlow Lite")
+    st.title("Disaster Detection with NLP")
 
     # Load model and text vectorization
     vectorizer, interpreter = vectorizer_and_load_model()
@@ -70,7 +70,7 @@ def main_tweet():
 )
     # Predict if there is input
     if st.button("Predict",):
-        clean_text = preprocessing_text([user_input])
+        clean_text = preprocessing_text(user_input)
         
         # Transform input using CountVectorizer
         user_input_vec = vectorizer.transform([clean_text])
