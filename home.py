@@ -6,19 +6,62 @@ import streamlit.components.v1 as components
 def home_page():
     centered_title = """
     <h1 style="text-align: center;">Disaster Analysis and Prediction from Tweets</h1>
-    <p>In the current digital era, social media platforms have evolved into dynamic spaces where individuals share thoughts, experiences, and, most importantly, real-time updates during emergencies and disasters. Among these platforms, Twitter stands out as a valuable source of data that, if effectively harnessed, can significantly impact emergency response, disaster management, humanitarian aid organizations and news media. 
-    Therefore, in this project, we are attempting to predict disasters from tweets.
-    </p>
     """
     st.markdown(centered_title, unsafe_allow_html=True)
     
+    components.html("""
+        <style>
+            #carouselExampleIndicators {
+                max-width: 100%; /* Set your desired maximum width */
+                margin: auto; /* Center the carousel */
+            }
+            .carousel-inner img {
+                object-fit: cover;
+                width: 80%;
+                max-height: 400px;
+            } 
+
+        </style>
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://insideclimatenews.org/wp-content/uploads/2023/03/wildfire_thibaud-mortiz-afp-getty-scaled.jpg" class="d-block w-100" alt="Slide 1">
+              
+            </div>
+            <div class="carousel-item">
+                <img src="https://asset.kompas.com/crops/cKW0Rlts9q27vXhl_gho26h6bm0=/0x0:1992x1328/750x500/data/photo/2020/03/11/5e689e40e618e.jpg" class="d-block w-100" alt="Slide 2">
+            </div>
+            <div class="carousel-item">
+                <img src="https://cdn.britannica.com/34/127134-050-49EC55CD/Building-foundation-earthquake-Japan-Kobe-January-1995.jpg" class="d-block w-100" alt="Slide 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    """,height=400
+    )
     #opening the image
     # image = Image.open('disaster.png')
     # st.image(image,caption="disaster", use_column_width=True)
-    # source_link = "https://www.independent.co.uk/climate-change/news/worst-climate-disasters-2022-hurricane-wildfires-heatwave-b2255198.html"
-    # st.write(f"Image source: [www.independent.co.uk]({source_link})")
+   
 
     paragraph = """
+    <p>In the current digital era, social media platforms have evolved into dynamic spaces where individuals share thoughts, experiences, and, most importantly, real-time updates during emergencies and disasters. Among these platforms, Twitter stands out as a valuable source of data that, if effectively harnessed, can significantly impact emergency response, disaster management, humanitarian aid organizations and news media. 
+    Therefore, in this project, we are attempting to predict disasters from tweets.
+    </p>
     <p>The project's overarching objectives include developing a reliable classification model that significantly contributes to the efficiency of disaster response and management.
     Furthermore, in this project, we can also perform geographic analysis using Named Entity Recognition (NER) to identify areas affected by disasters. This facilitates efficient and targeted emergency response efforts, aiding humanitarian organizations in identifying disaster-affected regions. 
     The key points that encapsulate the project's goals are as follows:
