@@ -18,7 +18,9 @@ def home_page():
     st.markdown(centered_title, unsafe_allow_html=True)
     
     # Add an image related to your project for a visual appeal
-    #st.image(load_image("path/to/your/image.jpg"), caption="Your Image Caption", use_column_width=True)
+    st.image(load_image("https://static.independent.co.uk/2022/10/26/16/UN%20emissions%20gap%20report%20comp.jpg"), caption="Your Image Caption", use_column_width=True)
+    source_link = "https://www.independent.co.uk/climate-change/news/worst-climate-disasters-2022-hurricane-wildfires-heatwave-b2255198.html"
+    st.write(f"Image source: [www.independent.co.uk]({source_link})")
 
     paragraph = """
     <p>The project's overarching objectives include developing a reliable classification model that significantly contributes to the efficiency of disaster response and management.
