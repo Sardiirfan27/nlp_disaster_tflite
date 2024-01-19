@@ -4,7 +4,8 @@ import home
 import menu_app.tweet as tweet
 import analysis
 
-st.set_page_config(page_title='Disaster Tweet Analysis', page_icon=':bar_chart:', layout='wide')
+st.set_page_config(page_title='Disaster Tweet Analysis', page_icon=':bar_chart:', layout='wide',
+                   theme="light")
 
     
 # atur menu untuk app
