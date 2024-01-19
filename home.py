@@ -1,12 +1,8 @@
 # home.py
 
 import streamlit as st
-from PIL import Image
 import streamlit.components.v1 as components
 
-def load_image(image_path):
-    img = Image.open(image_path)
-    return img
 
 def home_page():
     centered_title = """
@@ -18,8 +14,7 @@ def home_page():
     st.markdown(centered_title, unsafe_allow_html=True)
     
     # Add an image related to your project for a visual appeal
-    st.image(load_image("https://static.independent.co.uk/2022/10/26/16/UN%20emissions%20gap%20report%20comp.jpg?quality=75&width=990&crop=3%3A2%2Csmart&auto=webp"), 
-             caption="Your Image Caption", use_column_width=True)
+    st.image('disaster.jpg',caption="Your Image Caption", use_column_width=True)
     source_link = "https://www.independent.co.uk/climate-change/news/worst-climate-disasters-2022-hurricane-wildfires-heatwave-b2255198.html"
     st.write(f"Image source: [www.independent.co.uk]({source_link})")
 
@@ -37,9 +32,6 @@ def home_page():
     - **Geographical Analysis:** Enabling the model to analyze and identify disaster-prone regions, enhancing its capability to provide insights into the geographical areas affected by disasters.
     """
     st.markdown(markdown_text)
-
-    # Add an image related to your project for a visual appeal
-    #st.image(load_image("path/to/your/image.jpg"), caption="Your Image Caption", use_column_width=True)
 
 
     # bootstrap 5 collapse 
