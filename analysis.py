@@ -5,7 +5,7 @@ import pickle
 import tensorflow as tf
 import plotly.express as px
 import plotly.graph_objects as go
-import multiprocessing as mp
+
 
 import prep_app.preprocessing as pre
 from prep_app.translator import detect_language, translate_to_english
