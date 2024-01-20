@@ -12,7 +12,11 @@ from prep_app.translator import detect_language, translate_to_english
 from prep_app.ner import perform_ner_gpe
 
 
-# Define your preprocessing_text function
+def translator_process(text):
+    if detect_language(text) != 'en':
+        text = translate_to_english(text)
+    return text
+#Define your preprocessing_text function
 def preprocessing_text(text, use_stemmer=True):
     if detect_language(text) != 'en':
         text = translate_to_english(text)
@@ -75,7 +79,7 @@ def visualize_ner_entities(df, prediction_column, labels=None):
                  orientation='h')
     fig.update_layout(yaxis={'categoryorder':'total ascending'},
                       xaxis={'tickmode': 'linear', 'dtick': 1})
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, use_container_width=True)
     
 
 
@@ -113,10 +117,6 @@ def horizontal_bar_chart(df, x='unigram_counts',y='unigram', top=5, target=None)
     - df: DataFrame containing the data.
     - column_name: Name of the column to sort and use for the bar chart.
 
-    Example:
-    - df = pd.DataFrame({'Category': ['A', 'B', 'C'],
-                        'Values': [30, 20, 40]})
-      horizontal_bar_chart(df, 'Values')
     """
     # Sort the DataFrame by the specified column in descending order
     sorted_df = df.head(top).sort_values(by=x, ascending=True)
@@ -133,6 +133,21 @@ def horizontal_bar_chart(df, x='unigram_counts',y='unigram', top=5, target=None)
    
     # Show the plot
     st.plotly_chart(fig)
+    
+def map_choropleth(df, values, locations):
+    
+    # Plot peta menggunakan Plotly Express
+    fig = px.choropleth(df,
+                        locations=locations,  # Kolom dengan nama negara
+                        locationmode='country names',  # Mode lokasi menggunakan nama negara
+                        color=values,  # Kolom yang menentukan warna
+                        color_continuous_scale="PuRd",  # Skala warna yang digunakan
+                        title='Distribution of Disaster Tweets by Country',
+                        width=800,  # Lebar gambar
+                        height=600)  # Tinggi gambar
+
+    # Tampilkan plot
+    st.plotly_chart(fig)
 
 @st.cache_data
 def load_data_with_predictions(uploaded_file=None, column_to_predict=None):
@@ -145,6 +160,7 @@ def load_data_with_predictions(uploaded_file=None, column_to_predict=None):
     
     list_translated_text = df[column_to_predict].apply(lambda x: preprocessing_text(x, use_stemmer=False))
     df['ner_text'] =  list_translated_text.apply(lambda x: perform_ner_gpe(x))
+    # st.write(list_translated_text)
     return df
 
     
@@ -154,6 +170,8 @@ def main():
 
     row1 = st.columns(2)
     row2 = st.columns(2)
+    row3= st.columns(1)
+    
     with row1[0]:
         # File upload
         uploaded_file = st.file_uploader("Choose a file", type=["txt", "csv"])
@@ -170,7 +188,7 @@ def main():
         st.session_state.clicked = True
     
     with row1[0]:
-        st.button("Submit", on_click=click_button)
+        st.button("Submit", )
     
     if st.session_state.clicked:
         if uploaded_file is not None and column_to_predict:
@@ -178,7 +196,8 @@ def main():
             with row1[1]:
                 st.write("DataFrame with Predictions")
                 df=load_data_with_predictions(uploaded_file, column_to_predict)
-                start_row, end_row=st.slider('Number of rows to display', 0, df.shape[0], (0, 100))
+                #start_row, end_row=st.slider('Number of rows to display', 0, df.shape[0], (0, 100))
+                start_row,end_row= (0,df.shape[0])
                 st.dataframe(df.iloc[start_row:end_row])
 
                 # Download button for the new dataframe
@@ -188,6 +207,19 @@ def main():
                     file_name="predictions.csv",
                     key="download_predictions"
                 )
+            
+            with row3[0]:
+                disaster_rows = df[df['Prediction'] == 'Disaster']
+                all_entities = [entity for entities in disaster_rows['ner_text'] for entity in entities]
+
+                # count frequency of entity
+                entity_counts = {}
+                for entity in all_entities:
+                    entity_counts[entity] = entity_counts.get(entity, 0) + 1
+
+                entity_counts_df = pd.DataFrame(list(entity_counts.items()), columns=['Entity', 'Count'])
+                entity_counts_df = entity_counts_df.sort_values(by='Count', ascending=False)
+                map_choropleth(entity_counts_df, values='Count', locations='Entity')
             
             with row2[0]:
                 labels = df['Prediction'].value_counts().index

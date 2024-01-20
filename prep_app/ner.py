@@ -48,8 +48,8 @@ def perform_ner(text):
     return visualize_ner(doc, labels=labels)
     
 def perform_ner_gpe(text):
-    #perform NER (GPE)
-    labels = ["GPE"]
+    #perform NER 
+    labels = ["GPE","LOC","GEO"]
     doc = processing_text("en_core_web_sm", text)
     #entity labels
     entities = [ent.text for ent in doc.ents if ent.label_ in labels]
