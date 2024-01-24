@@ -5,3 +5,4 @@ id,text
 4,"Gempa bumi kuat M6.9 telah berlaku di Kepulauan Talaud , Indonesia pada 4:48 pg, 9 Jan 2024. Pusat gempa bumi terletak di 4.9° U dan 126.4° T dgn kedalaman 99 km. 93km Utara dari Pulau Talaud ,Indonesia. Tiada ancaman tsunami kepada Malaysia.MET Malaysia"
 5,"America forest fire https://gokul132003.blogspot.com/2023/12/america-forest-fire.html?spref=tw"
 6,"No, Trump is the king of misinformation! Kerry has science to prove climate change is real! Next time a Hurricane, flood or forest fire wipes a piece of America away come tell us what knowledge Trump has!"
+7, "Apa kabar"  

@@ -12,10 +12,10 @@ from prep_app.translator import detect_language, translate_to_english
 from prep_app.ner import perform_ner_gpe
 
 
-def translator_process(text):
-    if detect_language(text) != 'en':
-        text = translate_to_english(text)
-    return text
+# def translator_process(text):
+#     if detect_language(text) != 'en':
+#         text = translate_to_english(text)
+#     return text
 #Define your preprocessing_text function
 def preprocessing_text(text, use_stemmer=True):
     if detect_language(text) != 'en':
@@ -181,14 +181,14 @@ def main():
 
     # Check if 'clicked' is not present in the session state
     if 'clicked' not in st.session_state:
-        # If not present, initialize it to True
-        st.session_state.clicked = True
+        # If not present, initialize it to False
+        st.session_state.clicked = False
     def click_button():
          # Set 'clicked' to True when the button is clicked
         st.session_state.clicked = True
     
     with row1[0]:
-        st.button("Submit", )
+        st.button("Submit", on_click=click_button)
     
     if st.session_state.clicked:
         if uploaded_file is not None and column_to_predict:
