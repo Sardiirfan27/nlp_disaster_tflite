@@ -49,7 +49,7 @@ def perform_ner(text):
     
 def perform_ner_gpe(text):
     #perform NER 
-    labels = ["GPE","LOC","GEO"]
+    labels = ["GPE"]
     doc = processing_text("en_core_web_sm", text)
     #entity labels
     entities = [ent.text for ent in doc.ents if ent.label_ in labels]

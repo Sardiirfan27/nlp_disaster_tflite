@@ -12,10 +12,7 @@ from prep_app.translator import detect_language, translate_to_english
 from prep_app.ner import perform_ner_gpe
 
 
-# def translator_process(text):
-#     if detect_language(text) != 'en':
-#         text = translate_to_english(text)
-#     return text
+
 #Define your preprocessing_text function
 def preprocessing_text(text, use_stemmer=True):
     if detect_language(text) != 'en':
@@ -37,9 +34,9 @@ def vectorizer_and_load_model():
 
 # Function to predict text
 def predict_text(text, vectorizer, interpreter):
-    clean_text = preprocessing_text(text, use_stemmer=True) 
+    #clean_text = preprocessing_text(text, use_stemmer=True) 
     # Transform input using CountVectorizer
-    user_input_vec = vectorizer.transform([clean_text])
+    user_input_vec = vectorizer.transform([text])
 
     # Prepare input for TensorFlow Lite model
     input_tensor_index = interpreter.get_input_details()[0]['index']
@@ -149,18 +146,24 @@ def map_choropleth(df, values, locations):
     # Tampilkan plot
     st.plotly_chart(fig)
 
-@st.cache_data
+#@st.cache_data
 def load_data_with_predictions(uploaded_file=None, column_to_predict=None):
-    #read the file
-    df = pd.read_csv(uploaded_file)
-    
-    # Perform predictions and add a new column
-    vectorizer, interpreter = vectorizer_and_load_model()
-    df['Prediction'] = df[column_to_predict].apply(lambda x: predict_text(x, vectorizer, interpreter))
-    
-    list_translated_text = df[column_to_predict].apply(lambda x: preprocessing_text(x, use_stemmer=False))
-    df['ner_text'] =  list_translated_text.apply(lambda x: perform_ner_gpe(x))
-    # st.write(list_translated_text)
+    # Display loading animation during data loading
+    with st.spinner('Loading data and predicting...'):
+        # Read CSV file
+        df = pd.read_csv(uploaded_file)
+        
+        # Perform predictions and add a new column
+        vectorizer, interpreter = vectorizer_and_load_model()
+        text_after_preprocessing = df[column_to_predict].apply(lambda x: preprocessing_text(x, use_stemmer=True)) 
+        df['Prediction'] = text_after_preprocessing.apply(lambda x: predict_text(x, vectorizer, interpreter))
+        
+        # list_translated_text = df[column_to_predict].apply(lambda x: preprocessing_text(x, use_stemmer=False))
+        df['ner_text'] =  text_after_preprocessing.apply(lambda x: perform_ner_gpe(x))
+        # st.write(list_translated_text)
+        
+    # Stop loading animation after the process is completed
+    st.success('Data loaded successfully!')
     return df
 
     
@@ -179,7 +182,7 @@ def main():
         column_to_predict = st.text_input("Enter the column name to predict", "text")
         
 
-    # Check if 'clicked' is not present in the session state
+    #Check if 'clicked' is not present in the session state
     if 'clicked' not in st.session_state:
         # If not present, initialize it to False
         st.session_state.clicked = False
@@ -191,6 +194,7 @@ def main():
         st.button("Submit", on_click=click_button)
     
     if st.session_state.clicked:
+    # if st.button("Submit"):
         if uploaded_file is not None and column_to_predict:
             # Read the file
             with row1[1]:
