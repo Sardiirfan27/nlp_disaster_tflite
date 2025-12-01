@@ -48,11 +48,6 @@ You can directly explore the notebook, experiments, and analysis here:
 🔗 [https://www.kaggle.com/code/sardiirfansyah/nlp-eda-ner-glove-lstm-gru-cnn-tflite](https://www.kaggle.com/code/sardiirfansyah/nlp-eda-ner-glove-lstm-gru-cnn-tflite)
 
 ---
-
-Berikut versi revisinya dalam English dengan tambahan **Streamlit** dan tetap terasa profesional:
-
----
-
 ## Tech Stack 🧠🛠️
 
 The technologies and approaches used in this project include:
