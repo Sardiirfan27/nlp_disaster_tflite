@@ -1,6 +1,6 @@
-# Disaster tweet Prediction
+# Disaster Tweets Prediction and Location Identification using NLP 
 ---
-A short demo of the Streamlit inference interface and model usage can be viewed here:
+A short demo of the application interface can be viewed here:
 🔗 [https://youtu.be/RAt05cyo4mQ?si=uXKsuxK5iZOIZz_o](https://youtu.be/RAt05cyo4mQ?si=uXKsuxK5iZOIZz_o)
 ---
 
