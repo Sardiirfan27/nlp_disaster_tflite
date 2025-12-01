@@ -1,7 +1,7 @@
 # Disaster Tweets Prediction and Location Identification using NLP 
 ---
 A short demo of the application interface can be viewed here:
-🔗 [https://youtu.be/RAt05cyo4mQ?si=uXKsuxK5iZOIZz_o](https://youtu.be/RAt05cyo4mQ?si=uXKsuxK5iZOIZz_o)
+🔗 [Application Demo](https://youtu.be/RAt05cyo4mQ?si=uXKsuxK5iZOIZz_o)
 ---
 
 ## Background 👨‍💻
