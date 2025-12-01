@@ -1,5 +1,5 @@
 # Disaster Tweets Prediction and Location Identification using NLP 
----
+
 ### Application Demo 🎥  
 
 A short demo of the application interface can be viewed here:
@@ -16,8 +16,6 @@ During disasters, Twitter becomes a crucial communication channel where affected
 
 Additionally, extracting geographic information from tweets enables **location-based disaster analysis**, supporting humanitarian organizations in identifying affected regions and allocating resources more efficiently.
 
----
-
 ## Problem Statement 📝
 
 The core challenge is to develop a robust Natural Language Processing (NLP) model capable of identifying disaster-related content within millions of noisy, informal, and context-heavy tweets. Specific challenges include:
@@ -26,7 +24,6 @@ The core challenge is to develop a robust Natural Language Processing (NLP) mode
 * **Contextual Ambiguity** — Tweets may imply a disaster scenario indirectly without explicit keywords.
 * **Named Entity Extraction** — Identifying relevant entities (locations, organizations, event names) in noisy text is critical for context understanding.
 
----
 
 ## Objectives 📚
 
@@ -40,8 +37,6 @@ This research aims to build a scalable and reliable classification model to supp
 
 * **Geographical Analysis**
   Detecting disaster-impacted regions using location-based information extracted from tweets.
-
----
 
 ## Notebook Link 📎
 
